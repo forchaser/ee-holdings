@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EE HOLDINGS — 資源循環と貿易で、世界をつなぐ</title>
+<style>
+:root{
+  --bg:#070A0F; --bg2:#0C1119; --panel:#111825; --line:rgba(255,255,255,.09);
+  --tx:#E8EDF5; --tx2:#94A3B8; --gold:#C9A66B; --gold2:#E7D3AC; --blue:#3D6FF5;
+  --max:1180px; --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--tx); overflow-x:hidden;
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.75;
+}
+a{color:inherit;text-decoration:none}
+.en{font-family:"Helvetica Neue",Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+
+/* ---------- header ---------- */
+header{position:fixed;inset:0 0 auto 0;z-index:100;transition:.5s var(--ease);
+  background:linear-gradient(180deg,rgba(7,10,15,.92),rgba(7,10,15,0));backdrop-filter:blur(2px)}
+header.solid{background:rgba(7,10,15,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hbar{max-width:var(--max);margin:0 auto;padding:0 28px;height:78px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;flex-direction:column;line-height:1;margin-right:auto}
+.logo b{font-size:19px;letter-spacing:.3em;font-weight:700}
+.logo b i{font-style:normal;color:var(--gold)}
+.logo span{font-size:8.5px;color:var(--tx2);letter-spacing:.32em;margin-top:6px}
+nav{display:flex;gap:30px}
+nav a{font-size:11px;color:var(--tx2);position:relative;padding:6px 0;transition:.3s}
+nav a i{display:block;font-style:normal;font-size:9.5px;opacity:.55;letter-spacing:.05em;margin-top:3px}
+nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:.4s var(--ease)}
+nav a:hover,nav a.on{color:#fff}
+nav a:hover::after,nav a.on::after{width:100%}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--tx2);font-size:10px;letter-spacing:.15em;padding:7px 13px;cursor:pointer;transition:.3s;font-family:inherit}
+.lang button.on{background:var(--gold);color:#0A0D12;font-weight:700}
+.burger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
+.burger i{display:block;width:22px;height:1.5px;background:var(--tx);transition:.3s}
+
+/* ---------- page system ---------- */
+.page{display:none;animation:pin .8s var(--ease)}
+.page.on{display:block}
+@keyframes pin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:center;overflow:hidden}
+#globe{position:absolute;right:-4%;top:50%;transform:translateY(-50%);opacity:1}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(58% 70% at 12% 50%,rgba(7,10,15,.97),rgba(7,10,15,.55) 55%,rgba(7,10,15,0) 78%)}
+.hero .wrap{position:relative;z-index:2}
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:10px;color:var(--gold);margin-bottom:26px}
+.eyebrow::before{content:"";width:46px;height:1px;background:var(--gold)}
+.hero h1{font-size:clamp(34px,5.4vw,66px);line-height:1.28;font-weight:600;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--gold2);display:inline-block}
+.hero p{margin-top:28px;color:var(--tx2);font-size:15px;max-width:460px}
+.heroCta{margin-top:44px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:15px 30px;font-size:11px;border:1px solid var(--gold);color:var(--gold);transition:.4s var(--ease);cursor:pointer;background:none;font-family:inherit}
+.btn:hover{background:var(--gold);color:#0A0D12}
+.btn.ghost{border-color:var(--line);color:var(--tx2)}
+.btn.ghost:hover{background:#fff;color:#0A0D12;border-color:#fff}
+.scrollhint{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:3;font-size:9px;color:var(--tx2);display:flex;flex-direction:column;align-items:center;gap:10px}
+.scrollhint span{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:sc 2s infinite}
+@keyframes sc{0%{opacity:0;transform:scaleY(0)}50%{opacity:1}100%{opacity:0;transform:scaleY(1)}}
+
+/* ---------- ticker ---------- */
+.ticker{border-block:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:15px 0}
+.tk{display:flex;gap:56px;width:max-content;animation:tk 34s linear infinite;font-size:10.5px;color:var(--tx2)}
+.tk b{color:var(--gold);font-weight:600}
+@keyframes tk{to{transform:translateX(-50%)}}
+
+/* ---------- generic section ---------- */
+section{padding:112px 0}
+.sub{font-size:10px;color:var(--gold);margin-bottom:16px}
+h2{font-size:clamp(25px,3.2vw,40px);font-weight:600;line-height:1.4;letter-spacing:-.01em}
+h2+p.lead{color:var(--tx2);margin-top:22px;max-width:640px;font-size:14.5px}
+.grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:56px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.cell{background:var(--bg);padding:44px 36px;transition:.5s var(--ease);position:relative;overflow:hidden}
+.cell:hover{background:var(--panel)}
+.cell .no{font-size:10px;color:var(--gold);opacity:.7}
+.cell h3{font-size:19px;font-weight:600;margin:20px 0 14px}
+.cell p{color:var(--tx2);font-size:13.5px}
+.cell .more{margin-top:24px;font-size:10px;color:var(--gold);opacity:0;transform:translateX(-8px);transition:.5s var(--ease)}
+.cell:hover .more{opacity:1;transform:none}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-block:1px solid var(--line)}
+.stat{background:var(--bg);padding:46px 26px;text-align:center}
+.stat b{display:block;font-size:clamp(30px,3.6vw,46px);color:var(--gold2);font-weight:400;letter-spacing:-.02em}
+.stat span{font-size:10.5px;color:var(--tx2);display:block;margin-top:10px}
+
+/* split */
+.split{display:grid;grid-template-columns:1.05fr 1fr;gap:78px;align-items:center}
+.visual{aspect-ratio:4/3;border:1px solid var(--line);background:
+  radial-gradient(circle at 30% 25%,rgba(201,166,107,.16),transparent 55%),
+  linear-gradient(150deg,#0E1520,#070A0F);
+  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.visual::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px;opacity:.5;animation:drift 22s linear infinite}
+@keyframes drift{to{background-position:44px 44px}}
+.visual em{position:relative;font-style:normal;font-size:11px;color:var(--tx2)}
+
+/* table */
+table{width:100%;border-collapse:collapse;margin-top:48px;font-size:13.5px}
+th,td{text-align:left;padding:20px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+th{width:210px;color:var(--gold);font-weight:500;font-size:12px}
+td{color:var(--tx2)}
+
+/* timeline */
+.tl{margin-top:52px;border-left:1px solid var(--line);padding-left:36px}
+.tl div{position:relative;padding-bottom:38px}
+.tl div::before{content:"";position:absolute;left:-42px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.tl b{color:var(--gold);font-size:12px;letter-spacing:.1em}
+.tl p{color:var(--tx2);font-size:13.5px;margin-top:7px}
+
+/* contact */
+.form{display:grid;gap:20px;margin-top:48px;max-width:620px}
+.form label{font-size:10.5px;color:var(--tx2);display:block;margin-bottom:9px}
+.form input,.form textarea,.form select{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--tx);padding:14px 16px;font-size:14px;font-family:inherit;transition:.3s}
+.form input:focus,.form textarea:focus,.form select:focus{outline:0;border-color:var(--gold)}
+.form textarea{min-height:150px;resize:vertical}
+
+/* footer */
+footer{border-top:1px solid var(--line);background:var(--bg2);padding:64px 0 32px;font-size:12px;color:var(--tx2)}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px}
+footer h4{font-size:10px;color:var(--gold);margin-bottom:18px}
+footer li{list-style:none;margin-bottom:11px}
+footer a:hover{color:#fff}
+.copy{margin-top:56px;padding-top:26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:10px}
+
+.rv{opacity:0;transform:translateY(28px);transition:.9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  nav{position:fixed;inset:78px 0 auto 0;background:rgba(7,10,15,.98);flex-direction:column;gap:0;padding:16px 28px 30px;border-bottom:1px solid var(--line);display:none}
+  nav.open{display:flex}
+  nav a{padding:15px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .burger{display:flex;padding:8px 0 8px 6px}
+  .hbar{gap:12px;padding:0 20px;height:70px}
+  .wrap{padding:0 20px}
+  .logo b{font-size:16px;letter-spacing:.24em}
+  .lang button{padding:6px 10px;font-size:9px}
+  nav{inset:70px 0 auto 0}
+  .g3,.g2,.stats{grid-template-columns:1fr}
+  .split{grid-template-columns:1fr;gap:44px}
+  .fgrid{grid-template-columns:1fr}
+  #globe{right:-50%;opacity:.28}
+  section{padding:78px 0}
+}
+</style>
+</head>
+<body>
+
+<header id="hd">
+  <div class="hbar">
+    <a href="#/" class="logo en"><b>EE<i>·</i>HOLDINGS</b><span data-i="logosub">株式会社EEホールディングス</span></a>
+    <nav id="nav">
+      <a href="#/" data-r="/" class="en">Home<i data-i="nav1">ホーム</i></a>
+      <a href="#/about" data-r="/about" class="en">About<i data-i="nav2">会社概要</i></a>
+      <a href="#/business" data-r="/business" class="en">Business<i data-i="nav3">事業内容</i></a>
+      <a href="#/strength" data-r="/strength" class="en">Strength<i data-i="nav4">強み</i></a>
+      <a href="#/group" data-r="/group" class="en">Group<i data-i="nav5">グループ</i></a>
+      <a href="#/contact" data-r="/contact" class="en">Contact<i data-i="nav6">お問い合わせ</i></a>
+    </nav>
+    <div class="lang en">
+      <button id="bja" class="on">JA</button><button id="bko">KO</button>
+    </div>
+    <button class="burger" id="bg"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<!-- ======= HOME ======= -->
+<main>
+<div class="page on" data-p="/">
+  <div class="hero">
+    <canvas id="globe" width="820" height="820"></canvas>
+    <div class="wrap">
+      <div class="eyebrow en">Global Resource &amp; Trading Group</div>
+      <h1><span data-i="h1a">資源を循環させ、</span><br><em data-i="h1b">世界とつながる。</em></h1>
+      <p data-i="h1p">廃棄物・バイオ資源のリサイクルから、国境を越えた貿易まで。EEホールディングスは、日本と世界を結ぶ事業ポートフォリオを構築しています。</p>
+      <div class="heroCta">
+        <a class="btn en" href="#/business">Our Business →</a>
+        <a class="btn ghost en" href="#/contact">Contact Us</a>
+      </div>
+    </div>
+    <div class="scrollhint en">Scroll<span></span></div>
+  </div>
+
+  <div class="ticker"><div class="tk en" id="tk"></div></div>
+
+  <section>
+    <div class="wrap">
+      <div class="sub en rv">01 — Our Business</div>
+      <h2 class="rv" data-i="s1h">3つの事業で、循環と交易をつなぐ。</h2>
+      <p class="lead rv" data-i="s1p">環境事業を起点に、貿易・投資へと領域を広げる。私たちは「捨てられるもの」を「動かせる資源」に変える会社です。</p>
+      <div class="grid g3">
+        <div class="cell rv"><div class="no en">01</div><h3 data-i="c1h">環境・資源循環</h3><p data-i="c1p">廃棄物の収集・中間処理からバイオマス資源化まで。グループ会社EE JAPANが担う中核事業です。</p><div class="more en">Read more →</div></div>
+        <div class="cell rv"><div class="no en">02</div><h3 data-i="c2h">貿易・商事</h3><p data-i="c2p">再生資源、素材、設備。日韓を軸としたアジア圏のネットワークで、必要なものを必要な場所へ。</p><div class="more en">Read more →</div></div>
+        <div class="cell rv"><div class="no en">03</div><h3 data-i="c3h">投資・グループ経営</h3><p data-i="c3p">持株会社としてグループ全体の資本政策・ガバナンスを統括し、新規領域への投資を推進します。</p><div class="more en">Read more →</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat rv"><b>2</b><span class="en" data-i="st1">Countries / 日韓2拠点</span></div>
+    <div class="stat rv"><b>3</b><span class="en" data-i="st2">Business Segments</span></div>
+    <div class="stat rv"><b>100<small>%</small></b><span class="en" data-i="st3">Recycling Oriented</span></div>
+    <div class="stat rv"><b>24/7</b><span class="en" data-i="st4">Trading Network</span></div>
+  </div>
+
+  <section>
+    <div class="wrap split">
+      <div class="rv">
+        <div class="sub en">02 — Philosophy</div>
+        <h2 data-i="s2h">「物産」であること。</h2>
+        <p class="lead" data-i="s2p">一つの商品ではなく、流れそのものを設計する。回収し、再生し、運び、届ける ── その全工程に関わることで、価格ではなく仕組みで勝負します。</p>
+        <a class="btn en" href="#/about" style="margin-top:36px">About Us →</a>
+      </div>
+      <div class="visual rv"><em class="en">[ Image : Port &amp; Container Terminal ]</em></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= ABOUT ======= -->
+<div class="page" data-p="/about">
+  <section style="padding-top:170px">
+    <div class="wrap">
+      <div class="sub en">About</div>
+      <h2 data-i="a-h">私たちについて</h2>
+      <p class="lead" data-i="a-p">EEホールディングスは、環境事業と貿易事業を束ねる持株会社です。日本と韓国、二つの市場をまたぐ視点から、資源が最も価値を発揮する場所を探し続けています。</p>
+
+      <div class="split" style="margin-top:72px">
+        <div>
+          <div class="sub en">Message</div>
+          <h2 style="font-size:24px" data-i="a-mh">代表挨拶</h2>
+          <p style="color:var(--tx2);margin-top:20px;font-size:14px" data-i="a-mp">「捨てる」という言葉を、私たちの事業からなくしたい。そう考えて創業しました。廃棄物は処理する対象ではなく、まだ行き先が決まっていない資源です。その行き先をつくることが、私たちの仕事です。<br><br>国境を越えれば、価値は変わります。日本で余るものが、海の向こうでは足りない。その差を埋める役割を、これからも果たしてまいります。</p>
+          <p style="margin-top:26px;font-size:12px;color:var(--gold)" class="en">Representative Director</p>
+        </div>
+        <div class="visual"><em class="en">[ Image : CEO Portrait ]</em></div>
+      </div>
+
+      <h2 style="font-size:22px;margin-top:100px" data-i="a-oh">会社概要</h2>
+      <table>
+        <tr><th class="en">Company</th><td data-i="a-t1">株式会社EEホールディングス / EE HOLDINGS Co., Ltd.</td></tr>
+        <tr><th class="en">Established</th><td data-i="a-t2">— 年 — 月</td></tr>
+        <tr><th class="en">Capital</th><td data-i="a-t3">— 円</td></tr>
+        <tr><th class="en">Business</th><td data-i="a-t4">環境・資源循環事業／貿易・商事事業／グループ会社の経営管理</td></tr>
+        <tr><th class="en">Address</th><td data-i="a-t5">日本国 — 都 — 区 —</td></tr>
+        <tr><th class="en">Website</th><td>eecorp.co.jp</td></tr>
+      </table>
+
+      <h2 style="font-size:22px;margin-top:100px" data-i="a-hh">沿革</h2>
+      <div class="tl">
+        <div><b class="en">20XX</b><p data-i="a-y1">EE JAPAN 設立。廃棄物処理・バイオ資源事業を開始。</p></div>
+        <div><b class="en">20XX</b><p data-i="a-y2">再生資源の輸出入業務を開始。日韓間の取引を本格化。</p></div>
+        <div><b class="en">20XX</b><p data-i="a-y3">持株会社体制へ移行。EEホールディングスを設立。</p></div>
+        <div><b class="en">Now</b><p data-i="a-y4">貿易・商事領域を拡大中。</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= BUSINESS ======= -->
+<div class="page" data-p="/business">
+  <section style="padding-top:170px">
+    <div class="wrap">
+      <div class="sub en">Business</div>
+      <h2 data-i="b-h">事業内容</h2>
+      <p class="lead" data-i="b-p">環境事業で培った「集める・分ける・再生する」力を、貿易という「動かす」力につなげる。3つの事業は独立せず、循環の中でつながっています。</p>
+
+      <div class="split" style="margin-top:84px">
+        <div><div class="sub en">01 / Environment</div><h2 style="font-size:26px" data-i="b1h">環境・資源循環事業</h2>
+        <p style="color:var(--tx2);margin-top:20px;font-size:14px" data-i="b1p">産業廃棄物の収集運搬・中間処理、バイオマス資源化、リサイクル原料の製造。グループ会社 EE JAPAN が現場を担い、安定した処理能力と品質を確保しています。</p></div>
+        <div class="visual"><em class="en">[ Image : Recycling Plant ]</em></div>
+      </div>
+
+      <div class="split" style="margin-top:84px">
+        <div class="visual"><em class="en">[ Image : Cargo Ship ]</em></div>
+        <div><div class="sub en">02 / Trading</div><h2 style="font-size:26px" data-i="b2h">貿易・商事事業</h2>
+        <p style="color:var(--tx2);margin-top:20px;font-size:14px" data-i="b2p">再生資源・素材・機械設備の輸出入。日韓を軸に、通関から物流、決済までワンストップで対応します。少量多品種の取引にも柔軟に応じます。</p></div>
+      </div>
+
+      <div class="split" style="margin-top:84px">
+        <div><div class="sub en">03 / Investment</div><h2 style="font-size:26px" data-i="b3h">投資・グループ経営</h2>
+        <p style="color:var(--tx2);margin-top:20px;font-size:14px" data-i="b3p">持株会社としてグループ各社の資本・人材・ガバナンスを統括。環境と貿易の周辺領域における新規事業・提携を検討しています。</p></div>
+        <div class="visual"><em class="en">[ Image : Group Structure ]</em></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= STRENGTH ======= -->
+<div class="page" data-p="/strength">
+  <section style="padding-top:170px">
+    <div class="wrap">
+      <div class="sub en">Strength</div>
+      <h2 data-i="g-h">私たちの強み</h2>
+      <p class="lead" data-i="g-p">規模ではなく、つなぎ方で勝つ。現場を持つ会社が貿易をやることの意味が、ここにあります。</p>
+      <div class="grid g2">
+        <div class="cell rv"><div class="no en">01</div><h3 data-i="g1h">現場を持つ商社</h3><p data-i="g1p">処理施設を自社グループで保有。品質・数量・納期を自ら管理できるため、取引先に確実な供給を約束できます。</p></div>
+        <div class="cell rv"><div class="no en">02</div><h3 data-i="g2h">日韓ダブルネットワーク</h3><p data-i="g2p">日本法人と韓国側パートナーの双方に足場を持ち、両国の商習慣・規制の違いを踏まえた提案が可能です。</p></div>
+        <div class="cell rv"><div class="no en">03</div><h3 data-i="g3h">ワンストップ対応</h3><p data-i="g3p">回収・再生・輸出入・通関・決済まで一括対応。窓口が一つで済むため、意思決定のスピードが違います。</p></div>
+        <div class="cell rv"><div class="no en">04</div><h3 data-i="g4h">環境価値の可視化</h3><p data-i="g4p">再資源化率やトレーサビリティを数値で提示。取引先のサステナビリティ報告にもそのまま使える形で提供します。</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= GROUP ======= -->
+<div class="page" data-p="/group">
+  <section style="padding-top:170px">
+    <div class="wrap">
+      <div class="sub en">Group</div>
+      <h2 data-i="p-h">グループ会社</h2>
+      <p class="lead" data-i="p-p">EEホールディングスを持株会社として、各事業会社がそれぞれの領域を担っています。</p>
+      <div class="grid g2">
+        <div class="cell rv"><div class="no en">Holdings</div><h3>EE HOLDINGS</h3><p data-i="p1p">持株会社。グループ全体の経営管理、資本政策、新規投資を担当。</p><div class="more en">eecorp.co.jp</div></div>
+        <div class="cell rv"><div class="no en">Operating</div><h3>EE JAPAN</h3><p data-i="p2p">環境・バイオ事業会社。廃棄物処理およびバイオ資源化の現場を担う。</p><div class="more en">View site →</div></div>
+      </div>
+      <div class="split" style="margin-top:84px">
+        <div><div class="sub en">Structure</div><h2 style="font-size:24px" data-i="p-sh">グループ体制</h2>
+        <p style="color:var(--tx2);margin-top:20px;font-size:14px" data-i="p-sp">持株会社が戦略と資本を、事業会社が現場と実行を担う。役割を明確に分けることで、意思決定の速さと現場の専門性を両立させています。</p></div>
+        <div class="visual"><em class="en">[ Diagram : Group Structure ]</em></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= CONTACT ======= -->
+<div class="page" data-p="/contact">
+  <section style="padding-top:170px">
+    <div class="wrap">
+      <div class="sub en">Contact</div>
+      <h2 data-i="k-h">お問い合わせ</h2>
+      <p class="lead" data-i="k-p">お取引・ご相談・採用に関するお問い合わせはこちらから。担当者より2営業日以内にご返信いたします。</p>
+      <div class="form">
+        <div><label class="en" data-i="k-l1">会社名 / Company</label><input type="text"></div>
+        <div><label class="en" data-i="k-l2">ご担当者名 / Name</label><input type="text"></div>
+        <div><label class="en" data-i="k-l3">メールアドレス / E-mail</label><input type="email"></div>
+        <div><label class="en" data-i="k-l4">お問い合わせ種別 / Category</label>
+          <select><option data-i="k-o1">お取引について</option><option data-i="k-o2">環境・リサイクル事業</option><option data-i="k-o3">貿易・商事</option><option data-i="k-o4">その他</option></select></div>
+        <div><label class="en" data-i="k-l5">内容 / Message</label><textarea></textarea></div>
+        <button class="btn en" onclick="alert('デモページです / 데모 페이지입니다');return false">Send →</button>
+      </div>
+      <table style="margin-top:80px">
+        <tr><th class="en">Address</th><td data-i="k-t1">日本国 — 都 — 区 —</td></tr>
+        <tr><th class="en">Tel</th><td>+81 — — —</td></tr>
+        <tr><th class="en">E-mail</th><td>info@eecorp.co.jp</td></tr>
+      </table>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="logo en" style="margin-bottom:18px"><b>EE<i>·</i>HOLDINGS</b></div>
+        <p style="max-width:280px;font-size:12px" data-i="f-p">資源循環と貿易で、世界をつなぐ。<br>EE HOLDINGS Co., Ltd.</p>
+      </div>
+      <div><h4 class="en">Sitemap</h4><ul>
+        <li><a href="#/" data-i="nav1">ホーム</a></li><li><a href="#/about" data-i="nav2">会社概要</a></li>
+        <li><a href="#/business" data-i="nav3">事業内容</a></li><li><a href="#/strength" data-i="nav4">強み</a></li>
+        <li><a href="#/group" data-i="nav5">グループ</a></li><li><a href="#/contact" data-i="nav6">お問い合わせ</a></li></ul></div>
+      <div><h4 class="en">Domain</h4><ul>
+        <li>eecorp.co.jp</li><li>ee-holdings.com</li></ul></div>
+    </div>
+    <div class="copy en"><span>© EE HOLDINGS Co., Ltd. All rights reserved.</span><span>Privacy Policy</span></div>
+  </div>
+</footer>
+
+<script>
+/* ---------- rotating wire globe ---------- */
+(function(){
+  const c=document.getElementById('globe'); if(!c) return;
+  const x=c.getContext('2d'); const W=c.width, H=c.height, R=W*0.40, cx=W/2, cy=H/2;
+  const pts=[];
+  for(let la=-80;la<=80;la+=10) for(let lo=-180;lo<180;lo+=10) pts.push([la*Math.PI/180, lo*Math.PI/180]);
+  let a=0;
+  function loop(){
+    x.clearRect(0,0,W,H); a+=0.0022;
+    // halo
+    const g=x.createRadialGradient(cx,cy,R*0.7,cx,cy,R*1.55);
+    g.addColorStop(0,'rgba(201,166,107,.16)'); g.addColorStop(1,'rgba(7,10,15,0)');
+    x.fillStyle=g; x.beginPath(); x.arc(cx,cy,R*1.55,0,7); x.fill();
+    // points
+    for(const p of pts){
+      const la=p[0], lo=p[1]+a;
+      const X=Math.cos(la)*Math.sin(lo), Y=Math.sin(la), Z=Math.cos(la)*Math.cos(lo);
+      if(Z<-0.1) continue;
+      const s=(Z+1)/2;
+      x.fillStyle='rgba(211,180,124,'+(0.16+s*0.78)+')';
+      x.beginPath(); x.arc(cx+X*R, cy-Y*R, 0.7+s*1.5, 0, 7); x.fill();
+    }
+    // orbit ring
+    x.strokeStyle='rgba(201,166,107,.22)'; x.lineWidth=1;
+    x.save(); x.translate(cx,cy); x.rotate(-0.42); x.scale(1,0.26);
+    x.beginPath(); x.arc(0,0,R*1.32,0,7); x.stroke(); x.restore();
+    // orbiting dot
+    const oa=a*5.5, ox=Math.cos(oa)*R*1.32, oy=Math.sin(oa)*R*1.32*0.26;
+    const rx=ox*Math.cos(-0.42)-oy*Math.sin(-0.42), ry=ox*Math.sin(-0.42)+oy*Math.cos(-0.42);
+    x.fillStyle='#E7D3AC'; x.beginPath(); x.arc(cx+rx,cy+ry,2.6,0,7); x.fill();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ---------- ticker ---------- */
+(function(){
+  const items=['RESOURCE CIRCULATION','<b>—</b>','GLOBAL TRADING','<b>—</b>','BIOMASS','<b>—</b>','JAPAN × KOREA','<b>—</b>','WASTE TO VALUE','<b>—</b>','LOGISTICS','<b>—</b>','EE HOLDINGS','<b>—</b>'];
+  document.getElementById('tk').innerHTML=(items.join('</span><span>')+'</span><span>'+items.join('</span><span>')).replace(/^/,'<span>');
+})();
+
+/* ---------- router ---------- */
+const pages=[...document.querySelectorAll('.page')], links=[...document.querySelectorAll('nav a')];
+function route(){
+  const r=(location.hash||'#/').slice(1)||'/';
+  let found=false;
+  pages.forEach(p=>{const on=p.dataset.p===r; p.classList.toggle('on',on); if(on)found=true;});
+  if(!found) pages[0].classList.add('on');
+  links.forEach(l=>l.classList.toggle('on',l.dataset.r===r));
+  document.getElementById('nav').classList.remove('open');
+  window.scrollTo(0,0); setTimeout(reveal,60);
+}
+addEventListener('hashchange',route);
+
+/* ---------- reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+function reveal(){document.querySelectorAll('.rv:not(.in)').forEach(e=>io.observe(e))}
+
+/* ---------- header + burger ---------- */
+addEventListener('scroll',()=>document.getElementById('hd').classList.toggle('solid',scrollY>40));
+document.getElementById('bg').onclick=()=>document.getElementById('nav').classList.toggle('open');
+
+/* ---------- i18n (JA default / KO for review) ---------- */
+const KO={
+ logosub:'주식회사 EE홀딩스', nav1:'홈',nav2:'회사소개',nav3:'사업내용',nav4:'강점',nav5:'그룹사',nav6:'문의',
+ h1a:'자원을 순환시키고,', h1b:'세계와 연결한다.',
+ h1p:'폐기물·바이오 자원의 리사이클부터 국경을 넘는 무역까지. EE홀딩스는 일본과 세계를 잇는 사업 포트폴리오를 만들어 갑니다.',
+ s1h:'세 가지 사업으로 순환과 교역을 잇습니다.',
+ s1p:'환경사업을 기점으로 무역·투자로 영역을 넓힙니다. 우리는 "버려지는 것"을 "움직일 수 있는 자원"으로 바꾸는 회사입니다.',
+ c1h:'환경·자원순환', c1p:'폐기물 수집·중간처리부터 바이오매스 자원화까지. 그룹사 EE JAPAN이 담당하는 핵심 사업입니다.',
+ c2h:'무역·상사', c2p:'재생자원, 소재, 설비. 한일을 축으로 한 아시아 네트워크로 필요한 것을 필요한 곳으로.',
+ c3h:'투자·그룹경영', c3p:'지주회사로서 그룹 전체의 자본정책·거버넌스를 총괄하고 신규 영역 투자를 추진합니다.',
+ st1:'한·일 2거점', st2:'3개 사업부문', st3:'자원순환 중심', st4:'상시 트레이딩 네트워크',
+ s2h:'"물산"이라는 것.',
+ s2p:'하나의 상품이 아니라 흐름 자체를 설계합니다. 회수하고, 재생하고, 옮기고, 전달한다 — 그 전 공정에 관여함으로써 가격이 아닌 구조로 경쟁합니다.',
+ 'a-h':'우리에 대하여',
+ 'a-p':'EE홀딩스는 환경사업과 무역사업을 묶는 지주회사입니다. 일본과 한국, 두 시장을 넘나드는 시각으로 자원이 가장 큰 가치를 발휘하는 곳을 찾습니다.',
+ 'a-mh':'대표 인사말',
+ 'a-mp':'"버린다"는 말을 우리 사업에서 없애고 싶었습니다. 폐기물은 처리 대상이 아니라 아직 갈 곳이 정해지지 않은 자원입니다. 그 갈 곳을 만드는 것이 우리의 일입니다.<br><br>국경을 넘으면 가치는 달라집니다. 일본에서 남는 것이 바다 건너에서는 부족합니다. 그 격차를 메우는 역할을 계속하겠습니다.',
+ 'a-oh':'회사 개요','a-t1':'주식회사 EE홀딩스 / EE HOLDINGS Co., Ltd.','a-t2':'— 년 — 월','a-t3':'— 엔',
+ 'a-t4':'환경·자원순환사업 / 무역·상사사업 / 그룹사 경영관리','a-t5':'일본 — 도 — 구 —','a-hh':'연혁',
+ 'a-y1':'EE JAPAN 설립. 폐기물 처리·바이오 자원 사업 개시.','a-y2':'재생자원 수출입 업무 개시. 한일 거래 본격화.',
+ 'a-y3':'지주회사 체제로 전환. EE홀딩스 설립.','a-y4':'무역·상사 영역 확대 중.',
+ 'b-h':'사업내용','b-p':'환경사업에서 쌓은 "모으고·나누고·되살리는" 힘을 무역이라는 "움직이는" 힘으로 잇습니다. 세 사업은 분리되지 않고 순환 속에서 연결됩니다.',
+ b1h:'환경·자원순환 사업', b1p:'산업폐기물 수집운반·중간처리, 바이오매스 자원화, 재생원료 제조. 그룹사 EE JAPAN이 현장을 맡아 안정적인 처리능력과 품질을 확보합니다.',
+ b2h:'무역·상사 사업', b2p:'재생자원·소재·기계설비의 수출입. 한일을 축으로 통관부터 물류, 결제까지 원스톱 대응합니다.',
+ b3h:'투자·그룹경영', b3p:'지주회사로서 그룹 각사의 자본·인재·거버넌스를 총괄. 환경과 무역 주변 영역의 신규사업·제휴를 검토합니다.',
+ 'g-h':'우리의 강점','g-p':'규모가 아니라 잇는 방식으로 이깁니다. 현장을 가진 회사가 무역을 하는 것의 의미가 여기에 있습니다.',
+ g1h:'현장을 가진 상사', g1p:'처리시설을 자사 그룹이 보유. 품질·수량·납기를 직접 관리할 수 있어 확실한 공급을 약속합니다.',
+ g2h:'한일 더블 네트워크', g2p:'일본 법인과 한국 파트너 양쪽에 발판을 두어 양국의 상관행·규제 차이를 반영한 제안이 가능합니다.',
+ g3h:'원스톱 대응', g3p:'회수·재생·수출입·통관·결제까지 일괄 대응. 창구가 하나여서 의사결정 속도가 다릅니다.',
+ g4h:'환경가치의 가시화', g4p:'재자원화율과 추적성을 수치로 제시. 거래처의 지속가능성 보고에 그대로 쓸 수 있는 형태로 제공합니다.',
+ 'p-h':'그룹사','p-p':'EE홀딩스를 지주회사로 하여 각 사업회사가 각자의 영역을 맡고 있습니다.',
+ p1p:'지주회사. 그룹 전체 경영관리, 자본정책, 신규투자 담당.', p2p:'환경·바이오 사업회사. 폐기물 처리 및 바이오 자원화 현장을 담당.',
+ 'p-sh':'그룹 체제','p-sp':'지주회사가 전략과 자본을, 사업회사가 현장과 실행을 맡습니다. 역할을 명확히 나눠 의사결정 속도와 현장 전문성을 양립시킵니다.',
+ 'k-h':'문의하기','k-p':'거래·상담·채용 관련 문의는 이곳에서. 담당자가 2영업일 이내에 회신드립니다.',
+ 'k-l1':'회사명 / Company','k-l2':'담당자명 / Name','k-l3':'이메일 / E-mail','k-l4':'문의 종류 / Category','k-l5':'내용 / Message',
+ 'k-o1':'거래 관련','k-o2':'환경·리사이클 사업','k-o3':'무역·상사','k-o4':'기타','k-t1':'일본 — 도 — 구 —',
+ 'f-p':'자원순환과 무역으로 세계를 잇습니다.<br>EE HOLDINGS Co., Ltd.'
+};
+const JA={};
+document.querySelectorAll('[data-i]').forEach(e=>{ if(!(e.dataset.i in JA)) JA[e.dataset.i]=e.innerHTML; });
+function setLang(l){
+  const d=l==='ko'?KO:JA;
+  document.querySelectorAll('[data-i]').forEach(e=>{ const v=d[e.dataset.i]; if(v!==undefined) e.innerHTML=v; });
+  document.documentElement.lang=l==='ko'?'ko':'ja';
+  bja.classList.toggle('on',l!=='ko'); bko.classList.toggle('on',l==='ko');
+}
+bja.onclick=()=>setLang('ja'); bko.onclick=()=>setLang('ko');
+
+route(); reveal();
+</script>
+</body>
+</html>
